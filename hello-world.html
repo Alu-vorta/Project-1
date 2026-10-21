@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Md Arman Ashab Mondal</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,700;1,9..144,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    body { display: grid; place-items: center; overflow: hidden; height: 100vh; }
+
+    main { position: relative; z-index: 3; text-align: center; padding: 16px; }
+
+    .eyebrow { opacity: 0; animation: fadeUp 1s 0.2s forwards; }
+
+    h1 {
+      font-size: clamp(2.6rem, 11vw, 9rem);
+      font-weight: 700;
+      line-height: 0.95;
+      letter-spacing: -0.04em;
+      margin: 0.25em 0 0.15em;
+      font-variation-settings: "opsz" 144;
+    }
+    h1 .line { display: block; }
+    h1 .char {
+      display: inline-block;
+      opacity: 0;
+      transform: translateY(0.6em) rotate(8deg);
+      animation: rise 0.9s cubic-bezier(.2,.9,.25,1.2) forwards;
+      transition: transform 0.3s, color 0.3s;
+    }
+    h1 .char:hover { transform: translateY(-0.08em) rotate(-4deg) !important; color: var(--b); }
+    @keyframes rise { to { opacity: 1; transform: translateY(0) rotate(0); } }
+
+    .terminal {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6em;
+      margin-top: 1.5rem;
+      padding: 0.8em 1.4em;
+      font-family: var(--mono);
+      font-size: clamp(0.8rem, 1.8vw, 1rem);
+      border-radius: 999px;
+      opacity: 0;
+      animation: fadeUp 1s 1.6s forwards;
+    }
+    .terminal .prompt { color: var(--a); }
+    .cursor {
+      display: inline-block;
+      width: 0.55em; height: 1.1em;
+      background: var(--d);
+      vertical-align: middle;
+      animation: blink 1s steps(1) infinite;
+    }
+    @keyframes blink { 50% { opacity: 0; } }
+
+    .cta {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-top: 2.2rem;
+      opacity: 0;
+      animation: fadeUp 1s 2s forwards;
+    }
+    .btn {
+      font-family: var(--mono);
+      font-size: 0.8rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      text-decoration: none;
+      padding: 1em 1.8em;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      transition: transform 0.25s, background 0.25s, border-color 0.25s;
+    }
+    .btn:hover { transform: translateY(-2px); border-color: rgba(255,255,255,0.3); background: rgba(255,255,255,0.06); }
+    .btn.primary { background: linear-gradient(100deg, var(--b), var(--a)); color: var(--bg); border: none; }
+    .btn.primary:hover { filter: brightness(1.08); }
+
+    footer.fixed {
+      position: fixed; bottom: 24px; left: 0; right: 0;
+      text-align: center; z-index: 3;
+      font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.2em; color: var(--muted);
+      opacity: 0; animation: fadeUp 1s 2.2s forwards;
+    }
+  </style>
+</head>
+<body>
+  <div class="aurora"><div class="blob"></div><div class="blob"></div><div class="blob"></div><div class="blob"></div></div>
+  <div class="grain"></div>
+  <div class="glow" id="glow"></div>
+
+  <nav class="nav">
+    <a href="hello-world.html" class="active">Home</a>
+    <a href="about.html">About</a>
+    <a href="contact.html">Contact</a>
+  </nav>
+
+  <main>
+    <p class="eyebrow">// hello, i'm <span>●</span> live</p>
+    <h1>
+      <span class="line" data-split>Md Arman</span>
+      <span class="line"><em class="gradient-text" data-split>Ashab Mondal</em></span>
+    </h1>
+    <div class="terminal card">
+      <span class="prompt">❯</span>
+      <span id="typed"></span><span class="cursor"></span>
+    </div>
+    <div class="cta">
+      <a href="about.html" class="btn primary">About me →</a>
+      <a href="contact.html" class="btn">Say hello</a>
+    </div>
+  </main>
+
+  <footer class="fixed">MADE WITH HTML · CSS · A LITTLE MAGIC</footer>
+
+  <script src="script.js"></script>
+  <script>
+    // Split headline into animated characters
+    let delay = 0.35;
+    document.querySelectorAll('[data-split]').forEach(el => {
+      const text = el.textContent;
+      el.textContent = '';
+      [...text].forEach(ch => {
+        const s = document.createElement('span');
+        s.className = 'char';
+        s.textContent = ch === ' ' ? ' ' : ch;
+        s.style.animationDelay = delay.toFixed(2) + 's';
+        delay += 0.07;
+        el.appendChild(s);
+      });
+    });
+
+    // Typewriter cycling through greetings
+    const phrases = [
+      'print("Hi, I\'m Arman!")',
+      'console.log("Hi, I\'m Arman!");',
+      'std::cout << "Hi, I\'m Arman!";',
+      '<h1>Hi, I\'m Arman!</h1>',
+      'echo "Hi, I\'m Arman!"'
+    ];
+    const typed = document.getElementById('typed');
+    let p = 0, i = 0, deleting = false;
+    function tick() {
+      const word = phrases[p];
+      typed.textContent = word.slice(0, i);
+      if (!deleting && i < word.length) { i++; setTimeout(tick, 55); }
+      else if (!deleting) { deleting = true; setTimeout(tick, 1600); }
+      else if (i > 0) { i--; setTimeout(tick, 25); }
+      else { deleting = false; p = (p + 1) % phrases.length; setTimeout(tick, 300); }
+    }
+    setTimeout(tick, 2000);
+  </script>
+</body>
+</html>
