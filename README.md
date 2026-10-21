@@ -2,7 +2,7 @@
 
 A personal portfolio website built from scratch with **HTML, CSS and JavaScript**. It has no frameworks and no build step.
 
-🔗 **Live site:** [your-site.netlify.app](https://your-site.netlify.app)
+🔗 **Live site:** [11project1.netlify.app](https://11project1.netlify.app)
 
 ---
 
