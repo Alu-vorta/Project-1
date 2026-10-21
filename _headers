@@ -1,0 +1,14 @@
+# Netlify security headers — applied to every page of the site
+/*
+  # Stop other websites from embedding this site in a frame (clickjacking protection)
+  X-Frame-Options: DENY
+  # Stop browsers from guessing file types (MIME-sniffing protection)
+  X-Content-Type-Options: nosniff
+  # Only share the site's origin when visitors click external links
+  Referrer-Policy: strict-origin-when-cross-origin
+  # Turn off device features this site never uses
+  Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=(), usb=()
+  # Always use HTTPS
+  Strict-Transport-Security: max-age=31536000; includeSubDomains
+  # Only allow scripts, styles and fonts from this site and Google Fonts
+  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self'; form-action 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'none'; upgrade-insecure-requests

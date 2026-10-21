@@ -1,0 +1,23 @@
+# --- Secrets: never commit these ---
+.env
+.env.*
+*.key
+*.pem
+*.p12
+secrets.*
+credentials.*
+
+# --- Editor & OS files ---
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# --- Dependencies & build output ---
+node_modules/
+dist/
+.netlify/
+
+# --- Logs ---
+*.log
